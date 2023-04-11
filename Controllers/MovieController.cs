@@ -100,7 +100,7 @@ public class MovieController:ControllerBase
     }
 
     [HttpGet("explicitloading/{id:int}")]
-    public async Task<IActionResult<MovieDTO>> ExplicitGet(int id)
+    public async Task<IActionResult> ExplicitGet(int id)
     {
         var movie = await _context.Movies.AsTracking().FirstOrDefaultAsync(m => m.Id==id);
 
