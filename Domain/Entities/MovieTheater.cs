@@ -8,6 +8,7 @@ public class MovieTheater
     public decimal Price { get; set; }
     public int CinemaId { get; set; }
     public MovieTheaterType Type { get; set; }
-    public virtual Cinema Cinema{ get; set; }
-    public virtual HashSet<Movie> Movies{get;set;}
+    public Cinema Cinema{ get; set; }
+    public Currency Currency { get; set; }
+    public HashSet<Movie> Movies{get;set;}
 }

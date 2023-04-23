@@ -9,6 +9,14 @@ public class GenderConfiguration : IEntityTypeConfiguration<Gender>
     public void Configure(EntityTypeBuilder<Gender> builder)
     {
         builder.ToTable("Gender");
-        builder.HasIndex(g => g.Name).IsUnique();
+        builder.HasIndex(g => g.Name)
+            .IsUnique()
+            .HasFilter("IsDeleted = 0");
+        
+        //Pone un filtro por defecto a las entidades del modelo. En este caso, que no estén borrados
+        builder.HasQueryFilter(g => !g.IsDeleted);
+
+        //Create una propiedad sombra
+        //builder.Property<DateTime>("DateCreate").HasDefaultValueSql("GetDate()").HasColumnType("datetime2");
     }
 }

@@ -10,5 +10,5 @@ public class Comment
 
     public int MovieId{get;set;}
 
-    public virtual Movie Movie{get;set;} = null!;
+    public Movie Movie{get;set;} = null!;
 }

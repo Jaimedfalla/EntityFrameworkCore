@@ -8,8 +8,8 @@ public class Movie
     public DateTime Premiere { get; set; }
     public string PosterUrl { get; set; }
 
-    public virtual HashSet<Comment> Comments { get; set; } = new();
-    public virtual HashSet<Gender> Genders {get;set;} = new();
-    public virtual HashSet<MovieActor> MoviesActors {get;set;}
-    public virtual HashSet<MovieTheater> MovieTheaters { get; set; }
+    public HashSet<Comment> Comments { get; set; } = new();
+    public HashSet<Gender> Genders {get;set;} = new();
+    public HashSet<MovieActor> MoviesActors {get;set;}
+    public HashSet<MovieTheater> MovieTheaters { get; set; }
 }

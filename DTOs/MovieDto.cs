@@ -6,7 +6,8 @@ public class MovieDTO
         public string Title { get; set; } = null!;
         public bool IsPlaying { get; set; }
         public DateTime Premiere { get; set; }
-        public ICollection<GenderDto> Genders { get; set; } = new List<GenderDto>();
+        public ICollection<CommentDTO> Comments { get; set; }
+        public ICollection<int> Genders { get; set; } = new List<int>();
         public ICollection<CinemaDto> CinemaDtos{get;set;}
-        public ICollection<ActorDto> Actors {get;set;}
+        public ICollection<MovieActorDto> MoviesActors {get;set;}
     }

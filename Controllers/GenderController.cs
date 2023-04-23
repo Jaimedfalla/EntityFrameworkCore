@@ -27,18 +27,15 @@ public class GenderController:ControllerBase
         return await _context.Genders
             .ProjectTo<GenderDto>(_mapper.ConfigurationProvider)
             .OrderBy(g => g.Name).ToListAsync();
-    }
-
-    [HttpGet("{letter:alpha}/filter")]
-    public async Task<IEnumerable<Gender>> Filter(string letter)
-    {
-        return await _context.Genders
-            .Where(g => g.Name.Contains(letter)).ToListAsync();
-    }
+    }   
 
     [HttpPost]
     public async Task<IActionResult> Post(GenderDto gender)
     {
+        bool existGender = await _context.Genders.AnyAsync(g => g.Name.Equals(gender.Name));
+
+        if(existGender) return BadRequest("Gender already exists!!!");
+
         Gender g = _mapper.Map<Gender>(gender);
 
         _context.Add(g);
@@ -102,6 +99,22 @@ public class GenderController:ControllerBase
 
         _context.Remove(gender);
 
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    [HttpPost("{id:int}/restore")]
+    public async  Task<IActionResult> Restore(int id){
+        Gender gender = await _context.Genders
+        .AsTracking()
+        //Con el siguiente método se ignoran o no tienen en cuenta los filtros configurados en el Api Fluent
+        .IgnoreQueryFilters()
+        .FirstOrDefaultAsync(g => g.Id==id);
+
+        if(gender is null ) return NotFound();
+
+        gender.IsDeleted = false;
         await _context.SaveChangesAsync();
 
         return NoContent();

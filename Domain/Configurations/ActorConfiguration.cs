@@ -12,5 +12,7 @@ public class ActorConfiguration : IEntityTypeConfiguration<Actor>
         builder.Property(a => a.Name).IsRequired();
         builder.Property(a => a.Fortune).HasPrecision(18,2);
         builder.Property(a => a.Biography).HasMaxLength(int.MaxValue);
+        
+        // builder.Ignore(a => a.Age); //Esta es otra forma de ignorar el mapeo de una propiedad
     }
 }

@@ -183,6 +183,7 @@ public class InitialSeeding
             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg",
         };
 
+        //Forma de crear el seeding para una relación muchos a muchos con salto
         var genderMovieEntity = "GenderMovie";
         var genderIdProperty = "GendersId";
         var movieIdProperty = "MoviesId";
@@ -227,7 +228,7 @@ public class InitialSeeding
             new Dictionary<string, object> { [movieTheaterProperty] = movieTheaterCXCMegacentro.Id, [movieIdProperty] = theMatrixResurrections.Id }
          );
 
-
+        //Seeding para una relación muchos a muchos sin salto
             var keanuReevesMatrix = new MovieActor
             {
                 ActorId = keanuReeves.Id,

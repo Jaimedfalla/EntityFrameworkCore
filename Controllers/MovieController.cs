@@ -27,8 +27,9 @@ public class MovieController:ControllerBase
         //Método Eager Loading
         var movie = await _context.Movies
             .Include(p => p.Genders.OrderByDescending(g => g.Name))
-            .Include(p => p.MovieTheaters)
-                .ThenInclude(s => s.Cinema)
+            .Include(p => p.MoviesActors.OrderByDescending(ma => ma.Order))
+                .ThenInclude(s => s.Movie)
+            .Include(p => p.Comments)
             .Include(p => p.MoviesActors)
                 .ThenInclude(pa => pa.Actor)
             .FirstOrDefaultAsync(p => p.Id == id);
@@ -99,6 +100,7 @@ public class MovieController:ControllerBase
         return _mapper.Map<IEnumerable<MovieDTO>>(movies);
     }
 
+    //Explicit Loading se debe usar con prudencia porque puede ser algo ineficiente si no se sabe usar
     [HttpGet("explicitloading/{id:int}")]
     public async Task<IActionResult> ExplicitGet(int id)
     {
@@ -114,5 +116,47 @@ public class MovieController:ControllerBase
         var dto = _mapper.Map<MovieDTO>(movie);
 
         return Ok(dto);
+    }
+
+    [HttpGet("Filter")]
+    public async Task<IActionResult> GetFilter([FromQuery] MovieFilterDTO filter)
+    {
+        //Con el tipo Queryable se pueden construir las consultas de manera diferida o paso a paso
+        IQueryable<Movie> moviesQueryable = _context.Movies.AsQueryable();
+
+        if(!string.IsNullOrEmpty(filter.Title))
+        {
+            moviesQueryable = moviesQueryable.Where(m => m.Title.Contains(filter.Title));
+        }
+
+        if(filter.IsPlaying)
+        {
+            moviesQueryable = moviesQueryable.Where(m => m.IsPlaying);
+        }
+
+        if(filter.UpcomingReleases)
+        {
+            DateTime today = DateTime.Today;
+            moviesQueryable = moviesQueryable.Where(m => m.Premiere > today);
+        }
+
+        if(filter.GenderId != 0)
+        {
+            moviesQueryable = moviesQueryable.Where(m => m.Genders.Select(g => g.Id).Contains(filter.GenderId));
+        }
+
+        IEnumerable<Movie> movies = await moviesQueryable.Include(m => m.Genders).ToListAsync();
+
+        return Ok(_mapper.Map<IEnumerable<MovieDTO>>(movies));
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        int rowsAffected = await _context.Movies.Where(m => m.Id==id).ExecuteDeleteAsync();
+
+        if(rowsAffected==0) return NotFound();
+
+        return NoContent();
     }
 }

@@ -15,8 +15,22 @@ public class ApplicationDbContext:DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         InitialSeeding.Seed(modelBuilder);
+
+        //El siguiente es código ayuda a automatizar las configuraciones
+        foreach(var entidad in modelBuilder.Model.GetEntityTypes())
+        {
+            foreach(var property in entidad.GetProperties())
+            {
+                if(property.ClrType == typeof(string) && property.Name.Contains("URL",StringComparison.CurrentCultureIgnoreCase))
+                {
+                    property.SetIsUnicode(false);
+                    property.SetMaxLength(500);
+                }
+            }
+        }
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
@@ -34,4 +48,5 @@ public class ApplicationDbContext:DbContext
     public DbSet<Cinema> Cinemas => Set<Cinema>();
     public DbSet<CinemaOffer> Offers => Set<CinemaOffer>();
     public DbSet<MovieTheater> MovieTheaters => Set<MovieTheater>();
+    public DbSet<Log> Logs => Set<Log>();
 }

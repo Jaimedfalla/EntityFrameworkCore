@@ -24,15 +24,19 @@ public class ActorController:ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Actor>>> Get()
     {
-        return await _context.Actors.OrderByDescending(a => a.BirthDate).ToListAsync();
+        return await _context.Actors
+        .Include(a => a.MoviesActors)
+            .ThenInclude(ma => ma.Movie)
+        .OrderByDescending(a => a.BirthDate).ToListAsync();
     }
 
     [HttpGet("name")]
     public async Task<ActionResult<IEnumerable<Actor>>> Get(string nombre)
     {
         // Versión 1
-        return await _context.Actors
-            .Where(a => a.Name == nombre)
+        return await _context.Actors.Include(a => a.MoviesActors)
+                .ThenInclude(ma => ma.Movie)
+            .Where(a => a.Name.Contains(nombre))
             .OrderBy(a => a.Name)
             .ThenByDescending(a => a.BirthDate)
             .ToListAsync();

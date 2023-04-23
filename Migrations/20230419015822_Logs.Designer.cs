@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using ef7_example.Infraestructure.Database;
@@ -12,9 +13,11 @@ using ef7_example.Infraestructure.Database;
 namespace ef7_example.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230419015822_Logs")]
+    partial class Logs
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,11 +372,6 @@ namespace ef7_example.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateCreate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GetDate()");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -385,7 +383,7 @@ namespace ef7_example.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasFilter("IsDeleted = 0");
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Gender", (string)null);
 
@@ -420,20 +418,6 @@ namespace ef7_example.Migrations
                             IsDeleted = false,
                             Name = "Dramma"
                         });
-                });
-
-            modelBuilder.Entity("ef7_example.Domain.Entities.Log", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Message")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("ef7_example.Domain.Entities.Movie", b =>
@@ -591,19 +575,14 @@ namespace ef7_example.Migrations
                     b.Property<int>("CinemaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal(9,2)");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
+                    b.Property<int>("Type")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("ThreeD");
+                        .HasColumnType("int")
+                        .HasDefaultValue(2);
 
                     b.HasKey("Id");
 
@@ -616,65 +595,57 @@ namespace ef7_example.Migrations
                         {
                             Id = 5,
                             CinemaId = 3,
-                            Currency = "",
                             Price = 250m,
-                            Type = "TwoD"
+                            Type = 1
                         },
                         new
                         {
                             Id = 6,
                             CinemaId = 3,
-                            Currency = "",
                             Price = 330m,
-                            Type = "ThreeD"
+                            Type = 2
                         },
                         new
                         {
                             Id = 7,
                             CinemaId = 3,
-                            Currency = "",
                             Price = 450m,
-                            Type = "FourD"
+                            Type = 3
                         },
                         new
                         {
                             Id = 8,
                             CinemaId = 4,
-                            Currency = "",
                             Price = 250m,
-                            Type = "TwoD"
+                            Type = 1
                         },
                         new
                         {
                             Id = 1,
                             CinemaId = 1,
-                            Currency = "",
                             Price = 220m,
-                            Type = "TwoD"
+                            Type = 1
                         },
                         new
                         {
                             Id = 2,
                             CinemaId = 1,
-                            Currency = "",
                             Price = 320m,
-                            Type = "ThreeD"
+                            Type = 2
                         },
                         new
                         {
                             Id = 3,
                             CinemaId = 2,
-                            Currency = "",
                             Price = 200m,
-                            Type = "TwoD"
+                            Type = 1
                         },
                         new
                         {
                             Id = 4,
                             CinemaId = 2,
-                            Currency = "",
                             Price = 290m,
-                            Type = "ThreeD"
+                            Type = 2
                         });
                 });
 

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using ef7_example.Infraestructure.Database;
@@ -12,9 +13,11 @@ using ef7_example.Infraestructure.Database;
 namespace ef7_example.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230419024343_AddConvertionMovieTeather")]
+    partial class AddConvertionMovieTeather
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -369,11 +372,6 @@ namespace ef7_example.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateCreate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GetDate()");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -591,10 +589,6 @@ namespace ef7_example.Migrations
                     b.Property<int>("CinemaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Currency")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Price")
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal(9,2)");
@@ -616,7 +610,6 @@ namespace ef7_example.Migrations
                         {
                             Id = 5,
                             CinemaId = 3,
-                            Currency = "",
                             Price = 250m,
                             Type = "TwoD"
                         },
@@ -624,7 +617,6 @@ namespace ef7_example.Migrations
                         {
                             Id = 6,
                             CinemaId = 3,
-                            Currency = "",
                             Price = 330m,
                             Type = "ThreeD"
                         },
@@ -632,7 +624,6 @@ namespace ef7_example.Migrations
                         {
                             Id = 7,
                             CinemaId = 3,
-                            Currency = "",
                             Price = 450m,
                             Type = "FourD"
                         },
@@ -640,7 +631,6 @@ namespace ef7_example.Migrations
                         {
                             Id = 8,
                             CinemaId = 4,
-                            Currency = "",
                             Price = 250m,
                             Type = "TwoD"
                         },
@@ -648,7 +638,6 @@ namespace ef7_example.Migrations
                         {
                             Id = 1,
                             CinemaId = 1,
-                            Currency = "",
                             Price = 220m,
                             Type = "TwoD"
                         },
@@ -656,7 +645,6 @@ namespace ef7_example.Migrations
                         {
                             Id = 2,
                             CinemaId = 1,
-                            Currency = "",
                             Price = 320m,
                             Type = "ThreeD"
                         },
@@ -664,7 +652,6 @@ namespace ef7_example.Migrations
                         {
                             Id = 3,
                             CinemaId = 2,
-                            Currency = "",
                             Price = 200m,
                             Type = "TwoD"
                         },
@@ -672,7 +659,6 @@ namespace ef7_example.Migrations
                         {
                             Id = 4,
                             CinemaId = 2,
-                            Currency = "",
                             Price = 290m,
                             Type = "ThreeD"
                         });

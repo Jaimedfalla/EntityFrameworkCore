@@ -21,7 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
             sqlServer => sqlServer.UseNetTopologySuite()
         );
 
-        //Hace que todas las consultas por defectos no tengan Tracking o seguimiento, lo que las hace más eficientes
+        //Hace que todas las consultas por defecto no tengan Tracking o seguimiento, lo que las hace más eficientes
         options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
     }
 );

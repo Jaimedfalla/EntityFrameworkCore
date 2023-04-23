@@ -7,6 +7,6 @@ public class MovieActor
     public string Character{get; set;} = null!;
     public int Order { get; set; }
 
-    public virtual Movie Movie {get; set;} = null!;
-    public virtual Actor Actor {get; set;} = null!;
+    public Movie Movie {get; set;} = null!;
+    public Actor Actor {get; set;} = null!;
 }
