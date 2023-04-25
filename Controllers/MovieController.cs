@@ -28,10 +28,9 @@ public class MovieController:ControllerBase
         var movie = await _context.Movies
             .Include(p => p.Genders.OrderByDescending(g => g.Name))
             .Include(p => p.MoviesActors.OrderByDescending(ma => ma.Order))
-                .ThenInclude(s => s.Movie)
+                .ThenInclude(pa => pa.Actor)
             .Include(p => p.Comments)
             .Include(p => p.MoviesActors)
-                .ThenInclude(pa => pa.Actor)
             .FirstOrDefaultAsync(p => p.Id == id);
 
         if (movie is null)

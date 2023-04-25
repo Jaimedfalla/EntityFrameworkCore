@@ -2,9 +2,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ef7_example.Domain.Entities;
 
-public class Actor
+public class Actor : BaseAuditableEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; }
     public decimal Fortune { get; set; }
     public string Biography { get; set; }

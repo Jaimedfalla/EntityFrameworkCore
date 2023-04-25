@@ -25,9 +25,10 @@ public class ActorController:ControllerBase
     public async Task<ActionResult<IEnumerable<Actor>>> Get()
     {
         return await _context.Actors
-        .Include(a => a.MoviesActors)
-            .ThenInclude(ma => ma.Movie)
-        .OrderByDescending(a => a.BirthDate).ToListAsync();
+            .Include(a => a.MoviesActors)
+                .ThenInclude(ma => ma.Movie)
+            .OrderByDescending(a => a.BirthDate)
+            .ToListAsync();
     }
 
     [HttpGet("name")]

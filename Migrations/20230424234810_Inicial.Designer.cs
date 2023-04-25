@@ -13,15 +13,15 @@ using ef7_example.Infraestructure.Database;
 namespace ef7_example.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230419020157_Logs_II")]
-    partial class Logs_II
+    [Migration("20230424234810_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -326,42 +326,17 @@ namespace ef7_example.Migrations
                             Id = 2,
                             CinemaId = 4,
                             Discount = 15m,
-                            EndDate = new DateTime(2023, 4, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            InitialDate = new DateTime(2023, 4, 18, 0, 0, 0, 0, DateTimeKind.Local)
+                            EndDate = new DateTime(2023, 4, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            InitialDate = new DateTime(2023, 4, 24, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 1,
                             CinemaId = 1,
                             Discount = 10m,
-                            EndDate = new DateTime(2023, 4, 25, 0, 0, 0, 0, DateTimeKind.Local),
-                            InitialDate = new DateTime(2023, 4, 18, 0, 0, 0, 0, DateTimeKind.Local)
+                            EndDate = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            InitialDate = new DateTime(2023, 4, 24, 0, 0, 0, 0, DateTimeKind.Local)
                         });
-                });
-
-            modelBuilder.Entity("ef7_example.Domain.Entities.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Recommend")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("Comment", (string)null);
                 });
 
             modelBuilder.Entity("ef7_example.Domain.Entities.Gender", b =>
@@ -383,7 +358,7 @@ namespace ef7_example.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
+                        .HasFilter("IsDeleted = 0");
 
                     b.ToTable("Gender", (string)null);
 
@@ -423,7 +398,6 @@ namespace ef7_example.Migrations
             modelBuilder.Entity("ef7_example.Domain.Entities.Log", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Message")
@@ -590,14 +564,19 @@ namespace ef7_example.Migrations
                     b.Property<int>("CinemaId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Currency")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasPrecision(9, 2)
                         .HasColumnType("decimal(9,2)");
 
-                    b.Property<int>("Type")
+                    b.Property<string>("Type")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(2);
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("ThreeD");
 
                     b.HasKey("Id");
 
@@ -610,57 +589,65 @@ namespace ef7_example.Migrations
                         {
                             Id = 5,
                             CinemaId = 3,
+                            Currency = "",
                             Price = 250m,
-                            Type = 1
+                            Type = "TwoD"
                         },
                         new
                         {
                             Id = 6,
                             CinemaId = 3,
+                            Currency = "",
                             Price = 330m,
-                            Type = 2
+                            Type = "ThreeD"
                         },
                         new
                         {
                             Id = 7,
                             CinemaId = 3,
+                            Currency = "",
                             Price = 450m,
-                            Type = 3
+                            Type = "FourD"
                         },
                         new
                         {
                             Id = 8,
                             CinemaId = 4,
+                            Currency = "",
                             Price = 250m,
-                            Type = 1
+                            Type = "TwoD"
                         },
                         new
                         {
                             Id = 1,
                             CinemaId = 1,
+                            Currency = "",
                             Price = 220m,
-                            Type = 1
+                            Type = "TwoD"
                         },
                         new
                         {
                             Id = 2,
                             CinemaId = 1,
+                            Currency = "",
                             Price = 320m,
-                            Type = 2
+                            Type = "ThreeD"
                         },
                         new
                         {
                             Id = 3,
                             CinemaId = 2,
+                            Currency = "",
                             Price = 200m,
-                            Type = 1
+                            Type = "TwoD"
                         },
                         new
                         {
                             Id = 4,
                             CinemaId = 2,
+                            Currency = "",
                             Price = 290m,
-                            Type = 2
+                            Type = "ThreeD"
                         });
                 });
 
@@ -703,15 +690,37 @@ namespace ef7_example.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Comment", b =>
+            modelBuilder.Entity("ef7_example.Domain.Entities.Movie", b =>
                 {
-                    b.HasOne("ef7_example.Domain.Entities.Movie", "Movie")
-                        .WithMany("Comments")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.OwnsMany("ef7_example.Domain.Entities.Comment", "Comments", b1 =>
+                        {
+                            b1.Property<int>("MovieId")
+                                .HasColumnType("int");
 
-                    b.Navigation("Movie");
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Content")
+                                .HasMaxLength(150)
+                                .HasColumnType("nvarchar(150)");
+
+                            b1.Property<bool>("Recommend")
+                                .HasColumnType("bit");
+
+                            b1.HasKey("MovieId", "Id");
+
+                            b1.ToTable("Movie");
+
+                            b1.ToJson("Comments");
+
+                            b1.WithOwner("Movie")
+                                .HasForeignKey("MovieId");
+
+                            b1.Navigation("Movie");
+                        });
+
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("ef7_example.Domain.Entities.MovieActor", b =>
@@ -758,8 +767,6 @@ namespace ef7_example.Migrations
 
             modelBuilder.Entity("ef7_example.Domain.Entities.Movie", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("MoviesActors");
                 });
 #pragma warning restore 612, 618

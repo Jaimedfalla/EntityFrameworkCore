@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ef7_example.Infraestructure.Database;
 using System.Reflection;
+using ef7_example.Domain.interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 );
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddScoped<AuditableInterceptor>();
 
 var app = builder.Build();
 

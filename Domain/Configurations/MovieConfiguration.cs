@@ -10,6 +10,9 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
     {
         builder.ToTable("Movie");
         builder.Property(m => m.Title).IsRequired();
+        builder.OwnsMany(c => c.Comments,ownedNavigationBuilder =>
+            ownedNavigationBuilder.ToJson()
+        );
         //Cuando es Unicode, se permiten caracteres espciales y se recomienda usarlo para texto escrito por el usuario
         builder.Property(m => m.PosterUrl).HasMaxLength(500).IsUnicode(false);
     }

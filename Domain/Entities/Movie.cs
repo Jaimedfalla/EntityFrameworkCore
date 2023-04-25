@@ -1,8 +1,7 @@
 namespace ef7_example.Domain.Entities;
 
-public class Movie
+public class Movie : BaseAuditableEntity
 {
-    public int Id { get; set; }
     public string Title { get; set; }=null!;
     public bool IsPlaying { get; set; }
     public DateTime Premiere { get; set; }

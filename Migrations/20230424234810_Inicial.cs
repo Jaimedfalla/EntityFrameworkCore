@@ -50,11 +50,24 @@ namespace ef7_example.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Gender", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,7 +79,8 @@ namespace ef7_example.Migrations
                     Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     IsPlaying = table.Column<bool>(type: "bit", nullable: false),
                     Premiere = table.Column<DateTime>(type: "date", nullable: false),
-                    PosterUrl = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: true)
+                    PosterUrl = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: true),
+                    Comments = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,7 +117,8 @@ namespace ef7_example.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<decimal>(type: "decimal(9,2)", precision: 9, scale: 2, nullable: false),
                     CinemaId = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false, defaultValue: 2)
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "ThreeD"),
+                    Currency = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,27 +127,6 @@ namespace ef7_example.Migrations
                         name: "FK_MovieTheaters_Cinema_CinemaId",
                         column: x => x.CinemaId,
                         principalTable: "Cinema",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Content = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    Recommend = table.Column<bool>(type: "bit", nullable: false),
-                    MovieId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comment_Movie_MovieId",
-                        column: x => x.MovieId,
-                        principalTable: "Movie",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -216,11 +210,11 @@ namespace ef7_example.Migrations
                 columns: new[] { "Id", "Biography", "BirthDate", "Fortune", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Thomas Stanley Holland (Kingston upon Thames, Londres; 1 de junio de 1996), conocido simplemente como Tom Holland, es un actor, actor de voz y bailarín británico.", new DateTime(1996, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, "Tom Holland" },
-                    { 2, "Samuel Leroy Jackson (Washington D. C., 21 de diciembre de 1948), conocido como Samuel L. Jackson, es un actor y productor de cine, televisión y teatro estadounidense. Ha sido candidato al premio Óscar, a los Globos de Oro y al Premio del Sindicato de Actores, así como ganador de un BAFTA al mejor actor de reparto.", new DateTime(1948, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, "Samuel L. Jackson" },
-                    { 3, "Robert John Downey Jr. (Nueva York, 4 de abril de 1965) es un actor, actor de voz, productor y cantante estadounidense. Inició su carrera como actor a temprana edad apareciendo en varios filmes dirigidos por su padre, Robert Downey Sr., y en su infancia estudió actuación en varias academias de Nueva York.", new DateTime(1965, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, "Robert Downey Jr." },
-                    { 4, null, new DateTime(1981, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, "Chris Evans" },
-                    { 5, null, new DateTime(1972, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, "Dwayne Johnson" },
+                    { 1, "Thomas Stanley Holland (Kingston upon Thames, Londres; 1 de junio de 1996), conocido simplemente como Tom Holland, es un actor, actor de voz y bailarín británico.", new DateTime(1996, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1000000m, "Tom Holland" },
+                    { 2, "Samuel Leroy Jackson (Washington D. C., 21 de diciembre de 1948), conocido como Samuel L. Jackson, es un actor y productor de cine, televisión y teatro estadounidense. Ha sido candidato al premio Óscar, a los Globos de Oro y al Premio del Sindicato de Actores, así como ganador de un BAFTA al mejor actor de reparto.", new DateTime(1948, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), 2000000m, "Samuel L. Jackson" },
+                    { 3, "Robert John Downey Jr. (Nueva York, 4 de abril de 1965) es un actor, actor de voz, productor y cantante estadounidense. Inició su carrera como actor a temprana edad apareciendo en varios filmes dirigidos por su padre, Robert Downey Sr., y en su infancia estudió actuación en varias academias de Nueva York.", new DateTime(1965, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), 420000000m, "Robert Downey Jr." },
+                    { 4, null, new DateTime(1981, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), 39000000m, "Chris Evans" },
+                    { 5, null, new DateTime(1972, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 49000000m, "Dwayne Johnson" },
                     { 6, null, new DateTime(2000, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, "Auli'i Cravalho" },
                     { 7, null, new DateTime(1984, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, "Scarlett Johansson" },
                     { 8, null, new DateTime(1964, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 0m, "Keanu Reeves" }
@@ -239,14 +233,14 @@ namespace ef7_example.Migrations
 
             migrationBuilder.InsertData(
                 table: "Gender",
-                columns: new[] { "Id", "Name" },
+                columns: new[] { "Id", "IsDeleted", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Action" },
-                    { 2, "Animación" },
-                    { 3, "Comedy" },
-                    { 4, "Ciencia ficción" },
-                    { 5, "Dramma" }
+                    { 1, false, "Acción" },
+                    { 2, false, "Animación" },
+                    { 3, false, "Comedy" },
+                    { 4, false, "Ciencia ficción" },
+                    { 5, false, "Dramma" }
                 });
 
             migrationBuilder.InsertData(
@@ -266,8 +260,8 @@ namespace ef7_example.Migrations
                 columns: new[] { "Id", "CinemaId", "Discount", "EndDate", "InitialDate" },
                 values: new object[,]
                 {
-                    { 1, 1, 10m, new DateTime(2023, 4, 14, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2023, 4, 7, 0, 0, 0, 0, DateTimeKind.Local) },
-                    { 2, 4, 15m, new DateTime(2023, 4, 12, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2023, 4, 7, 0, 0, 0, 0, DateTimeKind.Local) }
+                    { 1, 1, 10m, new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2023, 4, 24, 0, 0, 0, 0, DateTimeKind.Local) },
+                    { 2, 4, 15m, new DateTime(2023, 4, 29, 0, 0, 0, 0, DateTimeKind.Local), new DateTime(2023, 4, 24, 0, 0, 0, 0, DateTimeKind.Local) }
                 });
 
             migrationBuilder.InsertData(
@@ -291,17 +285,17 @@ namespace ef7_example.Migrations
 
             migrationBuilder.InsertData(
                 table: "MovieTheaters",
-                columns: new[] { "Id", "CinemaId", "Price", "Type" },
+                columns: new[] { "Id", "CinemaId", "Currency", "Price", "Type" },
                 values: new object[,]
                 {
-                    { 1, 1, 220m, 1 },
-                    { 2, 1, 320m, 2 },
-                    { 3, 2, 200m, 1 },
-                    { 4, 2, 290m, 2 },
-                    { 5, 3, 250m, 1 },
-                    { 6, 3, 330m, 2 },
-                    { 7, 3, 450m, 3 },
-                    { 8, 4, 250m, 1 }
+                    { 1, 1, "", 220m, "TwoD" },
+                    { 2, 1, "", 320m, "ThreeD" },
+                    { 3, 2, "", 200m, "TwoD" },
+                    { 4, 2, "", 290m, "ThreeD" },
+                    { 5, 3, "", 250m, "TwoD" },
+                    { 6, 3, "", 330m, "ThreeD" },
+                    { 7, 3, "", 450m, "FourD" },
+                    { 8, 4, "", 250m, "TwoD" }
                 });
 
             migrationBuilder.InsertData(
@@ -339,16 +333,11 @@ namespace ef7_example.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_MovieId",
-                table: "Comment",
-                column: "MovieId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Gender_Name",
                 table: "Gender",
                 column: "Name",
                 unique: true,
-                filter: "[Name] IS NOT NULL");
+                filter: "IsDeleted = 0");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GenderMovie_MoviesId",
@@ -378,10 +367,10 @@ namespace ef7_example.Migrations
                 name: "CinemaOffer");
 
             migrationBuilder.DropTable(
-                name: "Comment");
+                name: "GenderMovie");
 
             migrationBuilder.DropTable(
-                name: "GenderMovie");
+                name: "Logs");
 
             migrationBuilder.DropTable(
                 name: "MovieMovieTheater");

@@ -1,15 +1,17 @@
 using System.Reflection;
-using ef7_example.Domain.Configurations;
 using ef7_example.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using ef7_example.Domain.interceptors;
 
 namespace ef7_example.Infraestructure.Database;
 
 public class ApplicationDbContext:DbContext
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
+    public readonly AuditableInterceptor _interceptor;
+
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, AuditableInterceptor interceptor):base(options)
     {
-     
+        _interceptor =  interceptor;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,10 +42,14 @@ public class ApplicationDbContext:DbContext
         configurationBuilder.Properties<DateTime>().HaveColumnType("date");
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.AddInterceptors(_interceptor);
+    }
+
     public DbSet<Gender> Genders => Set<Gender>();
     public DbSet<Actor> Actors => Set<Actor>();
     public DbSet<Movie> Movies => Set<Movie>();
-    public DbSet<Comment> Comentarios => Set<Comment>();
     public DbSet<MovieActor> MoviesActors => Set<MovieActor>();
     public DbSet<Cinema> Cinemas => Set<Cinema>();
     public DbSet<CinemaOffer> Offers => Set<CinemaOffer>();

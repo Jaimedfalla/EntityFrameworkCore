@@ -18,7 +18,7 @@ namespace ef7_example.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.4")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -167,9 +167,23 @@ namespace ef7_example.Migrations
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("date");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("date");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<decimal>("Fortune")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("date");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -186,7 +200,9 @@ namespace ef7_example.Migrations
                             Id = 1,
                             Biography = "Thomas Stanley Holland (Kingston upon Thames, Londres; 1 de junio de 1996), conocido simplemente como Tom Holland, es un actor, actor de voz y bailarín británico.",
                             BirthDate = new DateTime(1996, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 1000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tom Holland"
                         },
                         new
@@ -194,7 +210,9 @@ namespace ef7_example.Migrations
                             Id = 2,
                             Biography = "Samuel Leroy Jackson (Washington D. C., 21 de diciembre de 1948), conocido como Samuel L. Jackson, es un actor y productor de cine, televisión y teatro estadounidense. Ha sido candidato al premio Óscar, a los Globos de Oro y al Premio del Sindicato de Actores, así como ganador de un BAFTA al mejor actor de reparto.",
                             BirthDate = new DateTime(1948, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 2000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Samuel L. Jackson"
                         },
                         new
@@ -202,42 +220,54 @@ namespace ef7_example.Migrations
                             Id = 3,
                             Biography = "Robert John Downey Jr. (Nueva York, 4 de abril de 1965) es un actor, actor de voz, productor y cantante estadounidense. Inició su carrera como actor a temprana edad apareciendo en varios filmes dirigidos por su padre, Robert Downey Sr., y en su infancia estudió actuación en varias academias de Nueva York.",
                             BirthDate = new DateTime(1965, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 420000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Robert Downey Jr."
                         },
                         new
                         {
                             Id = 4,
                             BirthDate = new DateTime(1981, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 39000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Chris Evans"
                         },
                         new
                         {
                             Id = 5,
                             BirthDate = new DateTime(1972, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 49000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Dwayne Johnson"
                         },
                         new
                         {
                             Id = 6,
                             BirthDate = new DateTime(2000, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 0m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Auli'i Cravalho"
                         },
                         new
                         {
                             Id = 7,
                             BirthDate = new DateTime(1984, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 0m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Scarlett Johansson"
                         },
                         new
                         {
                             Id = 8,
                             BirthDate = new DateTime(1964, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 0m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Keanu Reeves"
                         });
                 });
@@ -323,42 +353,17 @@ namespace ef7_example.Migrations
                             Id = 2,
                             CinemaId = 4,
                             Discount = 15m,
-                            EndDate = new DateTime(2023, 4, 23, 0, 0, 0, 0, DateTimeKind.Local),
-                            InitialDate = new DateTime(2023, 4, 18, 0, 0, 0, 0, DateTimeKind.Local)
+                            EndDate = new DateTime(2023, 4, 29, 0, 0, 0, 0, DateTimeKind.Local),
+                            InitialDate = new DateTime(2023, 4, 24, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 1,
                             CinemaId = 1,
                             Discount = 10m,
-                            EndDate = new DateTime(2023, 4, 25, 0, 0, 0, 0, DateTimeKind.Local),
-                            InitialDate = new DateTime(2023, 4, 18, 0, 0, 0, 0, DateTimeKind.Local)
+                            EndDate = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Local),
+                            InitialDate = new DateTime(2023, 4, 24, 0, 0, 0, 0, DateTimeKind.Local)
                         });
-                });
-
-            modelBuilder.Entity("ef7_example.Domain.Entities.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Recommend")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MovieId");
-
-                    b.ToTable("Comment", (string)null);
                 });
 
             modelBuilder.Entity("ef7_example.Domain.Entities.Gender", b =>
@@ -368,11 +373,6 @@ namespace ef7_example.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("DateCreate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -444,8 +444,22 @@ namespace ef7_example.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("date");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<bool>("IsPlaying")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("date");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("PosterUrl")
                         .HasMaxLength(500)
@@ -468,7 +482,9 @@ namespace ef7_example.Migrations
                         new
                         {
                             Id = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = false,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
                             Premiere = new DateTime(2012, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Avengers"
@@ -476,7 +492,9 @@ namespace ef7_example.Migrations
                         new
                         {
                             Id = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = false,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg",
                             Premiere = new DateTime(2017, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Coco"
@@ -484,7 +502,9 @@ namespace ef7_example.Migrations
                         new
                         {
                             Id = 3,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = false,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
                             Premiere = new DateTime(2021, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Spider-Man: No way home"
@@ -492,7 +512,9 @@ namespace ef7_example.Migrations
                         new
                         {
                             Id = 4,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = false,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
                             Premiere = new DateTime(2019, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Spider-Man: Far From Home"
@@ -500,7 +522,9 @@ namespace ef7_example.Migrations
                         new
                         {
                             Id = 5,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = true,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg",
                             Premiere = new DateTime(2100, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "The Matrix Resurrections"
@@ -717,15 +741,35 @@ namespace ef7_example.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Comment", b =>
+            modelBuilder.Entity("ef7_example.Domain.Entities.Movie", b =>
                 {
-                    b.HasOne("ef7_example.Domain.Entities.Movie", "Movie")
-                        .WithMany("Comments")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.OwnsMany("ef7_example.Domain.Entities.Comment", "Comments", b1 =>
+                        {
+                            b1.Property<int>("MovieId")
+                                .HasColumnType("int");
 
-                    b.Navigation("Movie");
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Content")
+                                .HasMaxLength(150)
+                                .HasColumnType("nvarchar(150)");
+
+                            b1.Property<bool>("Recommend")
+                                .HasColumnType("bit");
+
+                            b1.HasKey("MovieId", "Id");
+
+                            b1.ToTable("Movie");
+
+                            b1.ToJson("Comments");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MovieId");
+                        });
+
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("ef7_example.Domain.Entities.MovieActor", b =>
@@ -772,8 +816,6 @@ namespace ef7_example.Migrations
 
             modelBuilder.Entity("ef7_example.Domain.Entities.Movie", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("MoviesActors");
                 });
 #pragma warning restore 612, 618

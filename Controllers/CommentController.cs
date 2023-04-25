@@ -23,13 +23,13 @@ public class CommentController: ControllerBase
     [HttpPost]
     public async Task<ActionResult> Post(int movieId, CommentDTO commentDTO)
     {
-        bool exist = await _context.Movies.AnyAsync(m => m.Id==movieId);
+        Movie exist = await _context.Movies.AsTracking().FirstOrDefaultAsync(m => m.Id==movieId);
 
-        if(!exist) return NotFound();
+        if(exist is null) return NotFound();
 
         Comment comment = _mapper.Map<Comment>(commentDTO);
-        comment.MovieId = movieId;
-        _context.Add(comment);
+        exist.Comments.Add(comment);
+        _context.Entry(exist).State = EntityState.Modified;
         await _context.SaveChangesAsync();
         return Ok();
     }
