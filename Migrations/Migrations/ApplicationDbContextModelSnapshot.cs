@@ -2,20 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Persistence.Database;
 
 #nullable disable
 
-namespace Migrations
+namespace Migrations.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230424234810_Inicial")]
-    partial class Inicial
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,135 +22,6 @@ namespace Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("GenderMovie", b =>
-                {
-                    b.Property<int>("GendersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MoviesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GendersId", "MoviesId");
-
-                    b.HasIndex("MoviesId");
-
-                    b.ToTable("GenderMovie");
-
-                    b.HasData(
-                        new
-                        {
-                            GendersId = 1,
-                            MoviesId = 1
-                        },
-                        new
-                        {
-                            GendersId = 4,
-                            MoviesId = 1
-                        },
-                        new
-                        {
-                            GendersId = 2,
-                            MoviesId = 2
-                        },
-                        new
-                        {
-                            GendersId = 4,
-                            MoviesId = 3
-                        },
-                        new
-                        {
-                            GendersId = 1,
-                            MoviesId = 3
-                        },
-                        new
-                        {
-                            GendersId = 3,
-                            MoviesId = 3
-                        },
-                        new
-                        {
-                            GendersId = 4,
-                            MoviesId = 4
-                        },
-                        new
-                        {
-                            GendersId = 1,
-                            MoviesId = 4
-                        },
-                        new
-                        {
-                            GendersId = 3,
-                            MoviesId = 4
-                        },
-                        new
-                        {
-                            GendersId = 4,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            GendersId = 1,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            GendersId = 5,
-                            MoviesId = 5
-                        });
-                });
-
-            modelBuilder.Entity("MovieMovieTheater", b =>
-                {
-                    b.Property<int>("MovieTheatersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MoviesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MovieTheatersId", "MoviesId");
-
-                    b.HasIndex("MoviesId");
-
-                    b.ToTable("MovieMovieTheater");
-
-                    b.HasData(
-                        new
-                        {
-                            MovieTheatersId = 3,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            MovieTheatersId = 4,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            MovieTheatersId = 1,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            MovieTheatersId = 2,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            MovieTheatersId = 5,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            MovieTheatersId = 6,
-                            MoviesId = 5
-                        },
-                        new
-                        {
-                            MovieTheatersId = 7,
-                            MoviesId = 5
-                        });
-                });
 
             modelBuilder.Entity("Domain.Entities.Actor", b =>
                 {
@@ -168,9 +38,23 @@ namespace Migrations
                     b.Property<DateTime?>("BirthDate")
                         .HasColumnType("date");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("date");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<decimal>("Fortune")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("date");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -187,7 +71,9 @@ namespace Migrations
                             Id = 1,
                             Biography = "Thomas Stanley Holland (Kingston upon Thames, Londres; 1 de junio de 1996), conocido simplemente como Tom Holland, es un actor, actor de voz y bailarín británico.",
                             BirthDate = new DateTime(1996, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 1000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Tom Holland"
                         },
                         new
@@ -195,7 +81,9 @@ namespace Migrations
                             Id = 2,
                             Biography = "Samuel Leroy Jackson (Washington D. C., 21 de diciembre de 1948), conocido como Samuel L. Jackson, es un actor y productor de cine, televisión y teatro estadounidense. Ha sido candidato al premio Óscar, a los Globos de Oro y al Premio del Sindicato de Actores, así como ganador de un BAFTA al mejor actor de reparto.",
                             BirthDate = new DateTime(1948, 12, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 2000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Samuel L. Jackson"
                         },
                         new
@@ -203,42 +91,54 @@ namespace Migrations
                             Id = 3,
                             Biography = "Robert John Downey Jr. (Nueva York, 4 de abril de 1965) es un actor, actor de voz, productor y cantante estadounidense. Inició su carrera como actor a temprana edad apareciendo en varios filmes dirigidos por su padre, Robert Downey Sr., y en su infancia estudió actuación en varias academias de Nueva York.",
                             BirthDate = new DateTime(1965, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 420000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Robert Downey Jr."
                         },
                         new
                         {
                             Id = 4,
                             BirthDate = new DateTime(1981, 6, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 39000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Chris Evans"
                         },
                         new
                         {
                             Id = 5,
                             BirthDate = new DateTime(1972, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 49000000m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Dwayne Johnson"
                         },
                         new
                         {
                             Id = 6,
                             BirthDate = new DateTime(2000, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 0m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Auli'i Cravalho"
                         },
                         new
                         {
                             Id = 7,
                             BirthDate = new DateTime(1984, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 0m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Scarlett Johansson"
                         },
                         new
                         {
                             Id = 8,
                             BirthDate = new DateTime(1964, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Fortune = 0m,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Keanu Reeves"
                         });
                 });
@@ -324,16 +224,16 @@ namespace Migrations
                             Id = 2,
                             CinemaId = 4,
                             Discount = 15m,
-                            EndDate = new DateTime(2023, 4, 29, 0, 0, 0, 0, DateTimeKind.Local),
-                            InitialDate = new DateTime(2023, 4, 24, 0, 0, 0, 0, DateTimeKind.Local)
+                            EndDate = new DateTime(2023, 4, 30, 0, 0, 0, 0, DateTimeKind.Local),
+                            InitialDate = new DateTime(2023, 4, 25, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 1,
                             CinemaId = 1,
                             Discount = 10m,
-                            EndDate = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Local),
-                            InitialDate = new DateTime(2023, 4, 24, 0, 0, 0, 0, DateTimeKind.Local)
+                            EndDate = new DateTime(2023, 5, 2, 0, 0, 0, 0, DateTimeKind.Local),
+                            InitialDate = new DateTime(2023, 4, 25, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -415,8 +315,22 @@ namespace Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("date");
+
+                    b.Property<string>("CreatedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<bool>("IsPlaying")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("date");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("PosterUrl")
                         .HasMaxLength(500)
@@ -439,7 +353,9 @@ namespace Migrations
                         new
                         {
                             Id = 1,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = false,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/8/8a/The_Avengers_%282012_film%29_poster.jpg",
                             Premiere = new DateTime(2012, 4, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Avengers"
@@ -447,7 +363,9 @@ namespace Migrations
                         new
                         {
                             Id = 2,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = false,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/9/98/Coco_%282017_film%29_poster.jpg",
                             Premiere = new DateTime(2017, 11, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Coco"
@@ -455,7 +373,9 @@ namespace Migrations
                         new
                         {
                             Id = 3,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = false,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
                             Premiere = new DateTime(2021, 12, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Spider-Man: No way home"
@@ -463,7 +383,9 @@ namespace Migrations
                         new
                         {
                             Id = 4,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = false,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/0/00/Spider-Man_No_Way_Home_poster.jpg",
                             Premiere = new DateTime(2019, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Spider-Man: Far From Home"
@@ -471,7 +393,9 @@ namespace Migrations
                         new
                         {
                             Id = 5,
+                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsPlaying = true,
+                            LastModified = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             PosterUrl = "https://upload.wikimedia.org/wikipedia/en/5/50/The_Matrix_Resurrections.jpg",
                             Premiere = new DateTime(2100, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "The Matrix Resurrections"
@@ -651,32 +575,131 @@ namespace Migrations
 
             modelBuilder.Entity("GenderMovie", b =>
                 {
-                    b.HasOne("Domain.Entities.Gender", null)
-                        .WithMany()
-                        .HasForeignKey("GendersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("GendersId")
+                        .HasColumnType("int");
 
-                    b.HasOne("Domain.Entities.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("MoviesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GendersId", "MoviesId");
+
+                    b.HasIndex("MoviesId");
+
+                    b.ToTable("GenderMovie");
+
+                    b.HasData(
+                        new
+                        {
+                            GendersId = 1,
+                            MoviesId = 1
+                        },
+                        new
+                        {
+                            GendersId = 4,
+                            MoviesId = 1
+                        },
+                        new
+                        {
+                            GendersId = 2,
+                            MoviesId = 2
+                        },
+                        new
+                        {
+                            GendersId = 4,
+                            MoviesId = 3
+                        },
+                        new
+                        {
+                            GendersId = 1,
+                            MoviesId = 3
+                        },
+                        new
+                        {
+                            GendersId = 3,
+                            MoviesId = 3
+                        },
+                        new
+                        {
+                            GendersId = 4,
+                            MoviesId = 4
+                        },
+                        new
+                        {
+                            GendersId = 1,
+                            MoviesId = 4
+                        },
+                        new
+                        {
+                            GendersId = 3,
+                            MoviesId = 4
+                        },
+                        new
+                        {
+                            GendersId = 4,
+                            MoviesId = 5
+                        },
+                        new
+                        {
+                            GendersId = 1,
+                            MoviesId = 5
+                        },
+                        new
+                        {
+                            GendersId = 5,
+                            MoviesId = 5
+                        });
                 });
 
             modelBuilder.Entity("MovieMovieTheater", b =>
                 {
-                    b.HasOne("Domain.Entities.MovieTheater", null)
-                        .WithMany()
-                        .HasForeignKey("MovieTheatersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("MovieTheatersId")
+                        .HasColumnType("int");
 
-                    b.HasOne("Domain.Entities.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("MoviesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MovieTheatersId", "MoviesId");
+
+                    b.HasIndex("MoviesId");
+
+                    b.ToTable("MovieMovieTheater");
+
+                    b.HasData(
+                        new
+                        {
+                            MovieTheatersId = 3,
+                            MoviesId = 5
+                        },
+                        new
+                        {
+                            MovieTheatersId = 4,
+                            MoviesId = 5
+                        },
+                        new
+                        {
+                            MovieTheatersId = 1,
+                            MoviesId = 5
+                        },
+                        new
+                        {
+                            MovieTheatersId = 2,
+                            MoviesId = 5
+                        },
+                        new
+                        {
+                            MovieTheatersId = 5,
+                            MoviesId = 5
+                        },
+                        new
+                        {
+                            MovieTheatersId = 6,
+                            MoviesId = 5
+                        },
+                        new
+                        {
+                            MovieTheatersId = 7,
+                            MoviesId = 5
+                        });
                 });
 
             modelBuilder.Entity("Domain.Entities.CinemaOffer", b =>
@@ -712,10 +735,8 @@ namespace Migrations
 
                             b1.ToJson("Comments");
 
-                            b1.WithOwner("Movie")
+                            b1.WithOwner()
                                 .HasForeignKey("MovieId");
-
-                            b1.Navigation("Movie");
                         });
 
                     b.Navigation("Comments");
@@ -749,6 +770,36 @@ namespace Migrations
                         .IsRequired();
 
                     b.Navigation("Cinema");
+                });
+
+            modelBuilder.Entity("GenderMovie", b =>
+                {
+                    b.HasOne("Domain.Entities.Gender", null)
+                        .WithMany()
+                        .HasForeignKey("GendersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MovieMovieTheater", b =>
+                {
+                    b.HasOne("Domain.Entities.MovieTheater", null)
+                        .WithMany()
+                        .HasForeignKey("MovieTheatersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Movie", null)
+                        .WithMany()
+                        .HasForeignKey("MoviesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Actor", b =>
