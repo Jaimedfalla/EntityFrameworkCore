@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ef7_example.Domain.Entities;
+namespace Domain.Entities;
 
 [NotMapped]
 public class Address

@@ -6,7 +6,7 @@ using NetTopologySuite.Geometries;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace ef7_example.Migrations
+namespace Migrations
 {
     /// <inheritdoc />
     public partial class Inicial : Migration

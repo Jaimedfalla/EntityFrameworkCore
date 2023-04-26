@@ -1,9 +1,9 @@
 using System.Reflection;
-using ef7_example.Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using ef7_example.Domain.interceptors;
+using Domain.interceptors;
 
-namespace ef7_example.Infraestructure.Database;
+namespace Persistence.Database;
 
 public class ApplicationDbContext:DbContext
 {
@@ -18,7 +18,7 @@ public class ApplicationDbContext:DbContext
     {
         base.OnModelCreating(modelBuilder);
         
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(Domain.Configurations.ActorConfiguration)));
         InitialSeeding.Seed(modelBuilder);
 
         //El siguiente es código ayuda a automatizar las configuraciones

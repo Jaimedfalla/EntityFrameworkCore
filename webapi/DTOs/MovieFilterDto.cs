@@ -1,4 +1,4 @@
-namespace ef7_example.DTOs;
+namespace webapi.DTOs;
 
 public class MovieFilterDTO
 {

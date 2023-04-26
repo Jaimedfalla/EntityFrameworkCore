@@ -1,8 +1,9 @@
-using ef7_example.Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Threading;
 
-namespace ef7_example.Domain.interceptors;
+namespace Domain.interceptors;
 
 public class AuditableInterceptor : SaveChangesInterceptor
 {

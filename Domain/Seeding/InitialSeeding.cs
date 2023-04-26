@@ -1,9 +1,9 @@
-using ef7_example.Domain.Enums;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
 
-namespace ef7_example.Domain.Entities;
+namespace Domain.Entities;
 
 public class InitialSeeding
 {

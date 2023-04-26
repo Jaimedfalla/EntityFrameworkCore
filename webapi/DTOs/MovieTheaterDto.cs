@@ -1,6 +1,6 @@
-using ef7_example.Domain.Enums;
+using Domain.Enums;
 
-namespace ef7_example.DTOs;
+namespace webapi.DTOs;
 
 public class MovieTheaterDto
 {

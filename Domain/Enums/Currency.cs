@@ -1,4 +1,4 @@
-namespace ef7_example.Domain.Enums;
+namespace Domain.Enums;
 
 public enum Currency{
     

@@ -1,8 +1,8 @@
-using ef7_example.Domain.Entities;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ef7_example.Domain.Configurations;
+namespace Domain.Configurations;
 
 public class MovieActorConfiguration : IEntityTypeConfiguration<MovieActor>
 {

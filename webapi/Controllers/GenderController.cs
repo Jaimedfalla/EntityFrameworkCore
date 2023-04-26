@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using ef7_example.Infraestructure.Database;
-using ef7_example.DTOs;
-using ef7_example.Domain.Entities;
+using Persistence.Database;
+using webapi.DTOs;
+using Domain.Entities;
 using AutoMapper.QueryableExtensions;
 
-namespace ef7_example.Controllers;
+namespace webapi.Controllers;
 
 [ApiController]
 [Route("api/gender")]

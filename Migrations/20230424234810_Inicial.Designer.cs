@@ -2,15 +2,13 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
-using ef7_example.Infraestructure.Database;
+using Persistence.Database;
 
 #nullable disable
 
-namespace ef7_example.Migrations
+namespace Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20230424234810_Inicial")]
@@ -155,7 +153,7 @@ namespace ef7_example.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Actor", b =>
+            modelBuilder.Entity("Domain.Entities.Actor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -245,7 +243,7 @@ namespace ef7_example.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Cinema", b =>
+            modelBuilder.Entity("Domain.Entities.Cinema", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -292,7 +290,7 @@ namespace ef7_example.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.CinemaOffer", b =>
+            modelBuilder.Entity("Domain.Entities.CinemaOffer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -339,7 +337,7 @@ namespace ef7_example.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Gender", b =>
+            modelBuilder.Entity("Domain.Entities.Gender", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -395,7 +393,7 @@ namespace ef7_example.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Log", b =>
+            modelBuilder.Entity("Domain.Entities.Log", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -409,7 +407,7 @@ namespace ef7_example.Migrations
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Movie", b =>
+            modelBuilder.Entity("Domain.Entities.Movie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -480,7 +478,7 @@ namespace ef7_example.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.MovieActor", b =>
+            modelBuilder.Entity("Domain.Entities.MovieActor", b =>
                 {
                     b.Property<int>("ActorId")
                         .HasColumnType("int");
@@ -553,7 +551,7 @@ namespace ef7_example.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.MovieTheater", b =>
+            modelBuilder.Entity("Domain.Entities.MovieTheater", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -653,13 +651,13 @@ namespace ef7_example.Migrations
 
             modelBuilder.Entity("GenderMovie", b =>
                 {
-                    b.HasOne("ef7_example.Domain.Entities.Gender", null)
+                    b.HasOne("Domain.Entities.Gender", null)
                         .WithMany()
                         .HasForeignKey("GendersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ef7_example.Domain.Entities.Movie", null)
+                    b.HasOne("Domain.Entities.Movie", null)
                         .WithMany()
                         .HasForeignKey("MoviesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -668,31 +666,31 @@ namespace ef7_example.Migrations
 
             modelBuilder.Entity("MovieMovieTheater", b =>
                 {
-                    b.HasOne("ef7_example.Domain.Entities.MovieTheater", null)
+                    b.HasOne("Domain.Entities.MovieTheater", null)
                         .WithMany()
                         .HasForeignKey("MovieTheatersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ef7_example.Domain.Entities.Movie", null)
+                    b.HasOne("Domain.Entities.Movie", null)
                         .WithMany()
                         .HasForeignKey("MoviesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.CinemaOffer", b =>
+            modelBuilder.Entity("Domain.Entities.CinemaOffer", b =>
                 {
-                    b.HasOne("ef7_example.Domain.Entities.Cinema", null)
+                    b.HasOne("Domain.Entities.Cinema", null)
                         .WithOne("Offer")
-                        .HasForeignKey("ef7_example.Domain.Entities.CinemaOffer", "CinemaId")
+                        .HasForeignKey("Domain.Entities.CinemaOffer", "CinemaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Movie", b =>
+            modelBuilder.Entity("Domain.Entities.Movie", b =>
                 {
-                    b.OwnsMany("ef7_example.Domain.Entities.Comment", "Comments", b1 =>
+                    b.OwnsMany("Domain.Entities.Comment", "Comments", b1 =>
                         {
                             b1.Property<int>("MovieId")
                                 .HasColumnType("int");
@@ -723,15 +721,15 @@ namespace ef7_example.Migrations
                     b.Navigation("Comments");
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.MovieActor", b =>
+            modelBuilder.Entity("Domain.Entities.MovieActor", b =>
                 {
-                    b.HasOne("ef7_example.Domain.Entities.Actor", "Actor")
+                    b.HasOne("Domain.Entities.Actor", "Actor")
                         .WithMany("MoviesActors")
                         .HasForeignKey("ActorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ef7_example.Domain.Entities.Movie", "Movie")
+                    b.HasOne("Domain.Entities.Movie", "Movie")
                         .WithMany("MoviesActors")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -742,9 +740,9 @@ namespace ef7_example.Migrations
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.MovieTheater", b =>
+            modelBuilder.Entity("Domain.Entities.MovieTheater", b =>
                 {
-                    b.HasOne("ef7_example.Domain.Entities.Cinema", "Cinema")
+                    b.HasOne("Domain.Entities.Cinema", "Cinema")
                         .WithMany("MovieTheaters")
                         .HasForeignKey("CinemaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -753,19 +751,19 @@ namespace ef7_example.Migrations
                     b.Navigation("Cinema");
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Actor", b =>
+            modelBuilder.Entity("Domain.Entities.Actor", b =>
                 {
                     b.Navigation("MoviesActors");
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Cinema", b =>
+            modelBuilder.Entity("Domain.Entities.Cinema", b =>
                 {
                     b.Navigation("MovieTheaters");
 
                     b.Navigation("Offer");
                 });
 
-            modelBuilder.Entity("ef7_example.Domain.Entities.Movie", b =>
+            modelBuilder.Entity("Domain.Entities.Movie", b =>
                 {
                     b.Navigation("MoviesActors");
                 });

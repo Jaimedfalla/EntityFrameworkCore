@@ -1,11 +1,11 @@
 using AutoMapper;
-using ef7_example.Domain.Entities;
-using ef7_example.DTOs;
-using ef7_example.Infraestructure.Database;
+using Domain.Entities;
+using webapi.DTOs;
+using Persistence.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace ef7_example.Controllers;
+namespace webapi.Controllers;
 
 [ApiController]
 [Route("api/movies/{movieId:int}/comments")]

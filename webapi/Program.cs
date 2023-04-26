@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ef7_example.Infraestructure.Database;
+using Persistence.Database;
 using System.Reflection;
-using ef7_example.Domain.interceptors;
+using Domain.interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     {
         options.UseSqlServer(connection,
             //NetTopologySuite es una librería para guardar coordenadas de una ubicación usando EFCore
-            sqlServer => sqlServer.UseNetTopologySuite()
+            sqlServer => sqlServer.UseNetTopologySuite().MigrationsAssembly("Migrations")
         );
 
         //Hace que todas las consultas por defecto no tengan Tracking o seguimiento, lo que las hace más eficientes

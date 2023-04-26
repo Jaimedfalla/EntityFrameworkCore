@@ -1,4 +1,4 @@
-namespace ef7_example.Domain.Entities;
+namespace Domain.Entities;
 
 public class CinemaOffer
 {

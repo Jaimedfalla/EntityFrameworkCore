@@ -1,10 +1,10 @@
 using AutoMapper;
-using ef7_example.Domain.Entities;
-using ef7_example.DTOs;
+using Domain.Entities;
+using webapi.DTOs;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
 
-namespace ef7_example.Mappers;
+namespace webapi.Mappers;
 
 public class MapperProfile: Profile
 {

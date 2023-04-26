@@ -1,7 +1,7 @@
-using ef7_example.Domain.Enums;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace ef7_example.Domain.Converters;
+namespace Domain.Converters;
 
 public class CurrencyToSymbol:ValueConverter<Currency,string>
 {

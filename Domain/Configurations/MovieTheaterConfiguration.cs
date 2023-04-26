@@ -1,10 +1,10 @@
-using ef7_example.Domain.Converters;
-using ef7_example.Domain.Entities;
-using ef7_example.Domain.Enums;
+using Domain.Converters;
+using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ef7_example.Domain.Configurations;
+namespace Domain.Configurations;
 
 public class MovieTheaterConfiguration : IEntityTypeConfiguration<MovieTheater>
 {

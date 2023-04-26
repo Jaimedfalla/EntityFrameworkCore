@@ -1,6 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-
-namespace ef7_example.Domain.Entities;
+namespace Domain.Entities;
 
 ////Con la siguiente línea se puede crear un índice sobre la tabla y el campo indicado
 //[Index(nameof(Name),IsUnique = true)]
