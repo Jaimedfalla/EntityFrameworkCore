@@ -158,4 +158,14 @@ public class MovieController:ControllerBase
 
         return NoContent();
     }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete()
+    {
+        int rowsAffected = await _context.Movies.Where(m=> m.Title.Contains("Title")).ExecuteDeleteAsync();
+
+        if(rowsAffected == 0) return NotFound();
+
+        return NoContent();
+    }
 }
