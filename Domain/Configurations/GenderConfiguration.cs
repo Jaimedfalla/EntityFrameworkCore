@@ -14,7 +14,8 @@ public class GenderConfiguration : IEntityTypeConfiguration<Gender>
             .HasFilter("IsDeleted = 0");
         
         //Pone un filtro por defecto a las entidades del modelo. En este caso, que no estén borrados
-        builder.HasQueryFilter(g => !g.IsDeleted);
+        // Los query filter no funcionan para los modelos compilados
+        // builder.HasQueryFilter(g => !g.IsDeleted);
 
         //Create una propiedad sombra
         //builder.Property<DateTime>("DateCreate").HasDefaultValueSql("GetDate()").HasColumnType("datetime2");

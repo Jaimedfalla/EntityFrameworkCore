@@ -1,3 +1,4 @@
+Next commands are for dotnet cli
 # EntityFrameworkCore
 A single project to improve ef knowledge
 
@@ -17,4 +18,10 @@ dotnet ef migrations add <name> --project .\Migrations\Migrations.csproj --start
 
 ```
 dotnet ef database update --startup-project ..\webapi\webapi.csproj --context ApplicationDbContext
+```
+
+## To get Help for some command
+
+```
+dotnet ef --help
 ```

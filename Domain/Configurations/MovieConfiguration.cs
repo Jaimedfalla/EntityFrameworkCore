@@ -15,5 +15,10 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
         );
         //Cuando es Unicode, se permiten caracteres espciales y se recomienda usarlo para texto escrito por el usuario
         builder.Property(m => m.PosterUrl).HasMaxLength(500).IsUnicode(false);
+
+        /* builder.HasMany(p => p.Genders)
+            .WithMany(g => g.Movies)
+            //Cambiar el nombre de la tabla intermedia
+            .UsingEntity(j => j.ToTable("GendersMovies")); */
     }
 }

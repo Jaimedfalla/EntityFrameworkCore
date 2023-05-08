@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Persistence.Database;
@@ -12,9 +13,11 @@ using Persistence.Database;
 namespace Migrations.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230507034146_TiposPago")]
+    partial class TiposPago
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,16 +254,16 @@ namespace Migrations.Migrations
                             Id = 2,
                             CinemaId = 4,
                             Discount = 15m,
-                            EndDate = new DateTime(2023, 5, 12, 0, 0, 0, 0, DateTimeKind.Local),
-                            InitialDate = new DateTime(2023, 5, 7, 0, 0, 0, 0, DateTimeKind.Local)
+                            EndDate = new DateTime(2023, 5, 11, 0, 0, 0, 0, DateTimeKind.Local),
+                            InitialDate = new DateTime(2023, 5, 6, 0, 0, 0, 0, DateTimeKind.Local)
                         },
                         new
                         {
                             Id = 1,
                             CinemaId = 1,
                             Discount = 10m,
-                            EndDate = new DateTime(2023, 5, 14, 0, 0, 0, 0, DateTimeKind.Local),
-                            InitialDate = new DateTime(2023, 5, 7, 0, 0, 0, 0, DateTimeKind.Local)
+                            EndDate = new DateTime(2023, 5, 13, 0, 0, 0, 0, DateTimeKind.Local),
+                            InitialDate = new DateTime(2023, 5, 6, 0, 0, 0, 0, DateTimeKind.Local)
                         });
                 });
 
@@ -713,29 +716,6 @@ namespace Migrations.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Domain.Entities.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products");
-
-                    b.UseTptMappingStrategy();
-                });
-
             modelBuilder.Entity("GenderMovie", b =>
                 {
                     b.Property<int>("GendersId")
@@ -921,60 +901,6 @@ namespace Migrations.Migrations
                             PayType = 1,
                             TransactionDate = new DateTime(2023, 5, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "devilinme@bukanimers.com"
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Entities.Merchandising", b =>
-                {
-                    b.HasBaseType("Domain.Entities.Product");
-
-                    b.Property<bool>("EnableInInventory")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsClothe")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsCollectible")
-                        .HasColumnType("bit");
-
-                    b.Property<double>("Volume")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Weight")
-                        .HasColumnType("float");
-
-                    b.ToTable("Merchandising", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "T-Shirt One Piece",
-                            Price = 11m,
-                            EnableInInventory = true,
-                            IsClothe = true,
-                            IsCollectible = false,
-                            Volume = 1.0,
-                            Weight = 1.0
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Entities.MovieForRent", b =>
-                {
-                    b.HasBaseType("Domain.Entities.Product");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
-
-                    b.ToTable("MovieForRent", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 2,
-                            Name = "Spider-Man",
-                            Price = 5.99m,
-                            MovieId = 1
                         });
                 });
 
@@ -1200,24 +1126,6 @@ namespace Migrations.Migrations
                     b.HasOne("Domain.Entities.Movie", null)
                         .WithMany()
                         .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Merchandising", b =>
-                {
-                    b.HasOne("Domain.Entities.Product", null)
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.Merchandising", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.MovieForRent", b =>
-                {
-                    b.HasOne("Domain.Entities.Product", null)
-                        .WithOne()
-                        .HasForeignKey("Domain.Entities.MovieForRent", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -24,6 +24,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
         //Hace que todas las consultas por defecto no tengan Tracking o seguimiento, lo que las hace más eficientes
         options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+        
+        //Línea para habilitar el detalle del log en EF
+        // options.EnableSensitiveDataLogging();
+
+        //Línea para habilitar la carga de los Modelos compilados
+        // options.UseModel(ApplicationDbContextModel.Instance);
     }
 );
 
@@ -31,6 +37,12 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<AuditableInterceptor>();
 
 var app = builder.Build();
+
+/* //El siguiente código es para ejecutar las migraciones y no hacer el updata-database
+* using var scope = app.Services.CreateScope();
+* ApplicationDbContext context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+* context.Database.Migrate();
+*/
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

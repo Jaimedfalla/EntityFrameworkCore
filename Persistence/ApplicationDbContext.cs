@@ -2,6 +2,7 @@ using System.Reflection;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Domain.interceptors;
+using Domain.Seeding;
 
 namespace Persistence.Database;
 
@@ -20,6 +21,7 @@ public class ApplicationDbContext:DbContext
         
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(Domain.Configurations.ActorConfiguration)));
         InitialSeeding.Seed(modelBuilder);
+        SeedingMessages.Seed(modelBuilder);
 
         //El siguiente es código ayuda a automatizar las configuraciones
         foreach(var entidad in modelBuilder.Model.GetEntityTypes())
@@ -55,4 +57,9 @@ public class ApplicationDbContext:DbContext
     public DbSet<CinemaOffer> Offers => Set<CinemaOffer>();
     public DbSet<MovieTheater> MovieTheaters => Set<MovieTheater>();
     public DbSet<Log> Logs => Set<Log>();
+    public DbSet<Person> People => Set<Person>();
+    public DbSet<Message> Messages => Set<Message>();
+    public DbSet<CinemaDetail> Details => Set<CinemaDetail>();
+    public DbSet<Pay> Pays => Set<Pay>();
+    public DbSet<Product> Products => Set<Product>();
 }

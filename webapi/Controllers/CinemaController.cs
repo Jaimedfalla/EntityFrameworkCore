@@ -55,7 +55,7 @@ public class CinemaController : ControllerBase
 
         Cinema cinema = new Cinema
         {
-            Name="Cinemark Plaza Imperial",
+            Name="Cinemark Plaza Imperial con Restrict",
             Location = cinemaLocation,
             Offer = new CinemaOffer{
                 Discount = 5,
@@ -90,5 +90,14 @@ public class CinemaController : ControllerBase
         _context.Add(cinema);
         await _context.SaveChangesAsync();
         return Ok();
+    }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> Delete(int id) {
+        int affected = await _context.Cinemas.Where(c => c.Id==id).ExecuteDeleteAsync();
+
+        if(affected == 0) return NotFound();
+
+        return NoContent();        
     }
 }

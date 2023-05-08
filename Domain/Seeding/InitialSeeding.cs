@@ -1,9 +1,10 @@
+using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
 
-namespace Domain.Entities;
+namespace Domain.Seeding;
 
 public class InitialSeeding
 {

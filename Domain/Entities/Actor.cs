@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities;
 
 public class Actor : BaseAuditableEntity
-{
+{   
     public string Name { get; set; }
     public decimal Fortune { get; set; }
     public string Biography { get; set; }
     public DateTime? BirthDate { get; set; }
+    public Address Home { get; set; }
+    public Address Billing { get; set; }
 
     [NotMapped]
     public int? Age{
@@ -23,8 +25,6 @@ public class Actor : BaseAuditableEntity
             return age;
         }
     }
-
-    public Address Address { get; set; }
 
     public ICollection<MovieActor> MoviesActors {get;set;} = new List<MovieActor>();
 }

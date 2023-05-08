@@ -6,5 +6,5 @@ public class CinemaOffer
     public DateTime InitialDate { get; set; }
     public DateTime EndDate { get; set; }
     public decimal Discount { get; set; }
-    public int CinemaId { get; set; }
+    public int CinemaId { get; set; } //Se define una relación por convención <entidad>Id
 }
